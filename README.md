@@ -14,5 +14,5 @@ Unlock changed files automatically in the following cases:
 Run following command in your git working directory:
 
 ```bash
-curl https://raw.githubusercontent.com/negokaz/git-lfs-auto-unlock/master/git-hooks/reference-transaction -o .git/hooks/reference-transaction && chmod +x .git/hooks/reference-transaction
+curl -L https://raw.githubusercontent.com/saphirah/git-lfs-auto-unlock/master/git-hooks/reference-transaction -o .git\hooks\reference-transaction
 ```
