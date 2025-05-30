@@ -3,6 +3,7 @@
 # This hook script detectes changes on the specified remote ref (track_ref) and
 # unlocks the own file locks that have already been pushed/merged to the remote branch.
 #
+TARGET_BRANCH=development
 set -eu
 
 function main {
@@ -47,17 +48,9 @@ function main {
 
 function is_remote_default_branch {
     local ref_name="$1"
-    # Extract remote name from ref_name
     local remote_name
-    remote_name="$(awk -F / '{print $3}' <<< "${ref_name}")"
-    # fetch remote default branch
-    # see also: https://stackoverflow.com/questions/28666357/how-to-get-default-git-branch/44750379#44750379
-    if git remote set-head --auto "${remote_name}" &> /dev/null
-    then
-        test "${ref_name}" = "$(git rev-parse --symbolic-full-name "${remote_name}/HEAD")"
-    else
-        false
-    fi
+    remote_name="$(awk -F/ '{print $3}' <<<"${ref_name}")"
+    test "${ref_name}" = "refs/remotes/${remote_name}/${TARGET_BRANCH}"
 }
 
 function store_tmp_value {
